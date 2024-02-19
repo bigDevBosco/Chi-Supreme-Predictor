@@ -6,7 +6,7 @@ Basic Idea is predicting football/soccer matches.
 This predictions will be calculated based on defined logics and basics maths.
 
 
-The data to be used will be Average Goals Scored, Average Goal Conceded and team's current form with predefined out the box logic.
+The data to be used will be Average Goals Scored, Average Goal Conceded and team's current form with predefined out of the box logic.
 
 ## Prediction Results
 

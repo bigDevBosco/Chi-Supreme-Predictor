@@ -5,14 +5,21 @@
   --desktop:1200px;
 }
 
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  background-color: #000;
-}
 
 
-@media (min-width:var(--mobile)){
-  
+/*body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+
+  #teams{
+    display: flex;
+    flex-direction: row;
+  }*/
+
+@media (min-width:576px) {
+  body{
+    background-color: "red";
+  }
 }

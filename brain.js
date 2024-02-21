@@ -183,6 +183,7 @@ function goal(goal) {
   }
   return result
 }
+//Still no styling
 
 
 btn.addEventListener("click", result)

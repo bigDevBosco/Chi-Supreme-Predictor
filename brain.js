@@ -257,15 +257,20 @@ ${home2}:${away2}
   let home = goal2(((home_total + home_total2) / 2))
   let away = goal2(((away_total + away_total2) / 2))
   //console.log(home_total2, away_total2)
-  if (home > away) {
-    choice = `Home`
-    info = `Prediction Accuracy: ${homeWin}%`
-  } else if (home < away) {
-    choice = `Away`
-    info = `Prediction Accuracy: ${awayWin}%`
+  if (home_form_value && away_form_value && gShv && gSav && gChv && gCav) {
+    if (home > away) {
+      choice = `Home`
+      info = `Prediction Accuracy: ${homeWin}%`
+    } else if (home < away) {
+      choice = `Away`
+      info = `Prediction Accuracy: ${awayWin}%`
+    } else {
+      choice = `Draw`
+      info = `Prediction Accuracy: ${drawWin}%`
+    }
   } else {
-    choice = `Draw`
-    info = `Prediction Accuracy: ${drawWin}%`
+    choice = `Some Data missing`
+    info = null
   }
   //console.log(gScore)
 
@@ -341,6 +346,13 @@ ${home2}:${away2}
 <p> <span class="display-3">${choice}</span></p>
 <p>${info}</p>
 `
+
+  home_form.value = ""
+  away_form.value = ""
+  goal_scored_home.value = ""
+  goal_scored_away.value = ""
+  goal_conceded_home.value = ""
+  goal_conceded_away.value = ""
 }
 
 

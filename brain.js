@@ -84,26 +84,26 @@ const result = () => {
   let final_goal_home_2 = goal(home_goal_2)
   let final_goal_away_2 = goal(away_goal_2)
 
-  let goalsTotal1 = final_goal_home_1 + final_goal_away_1
-  let goalsTotal2 = final_goal_home_2 + final_goal_away_2
+  
 
   let home_total = goal(((final_goal_home_1 + final_goal_home_2) / 2))
   let away_total = goal(((final_goal_away_1 + final_goal_away_2) / 2))
+  let goalsTotal = home_total + away_total
   let correct_score = `${home_total}:${away_total}`
 
 
 
   let suggestions = []
 
-  if (home_total>= 1 && away_total>=1) {
+  if (home_total >= 1 && away_total >= 1) {
     suggestions.push("Both Teams to Score")
   }
 
-  if (home_total > 2 && away_total > 2) {
+  if (goalsTotal>2) {
     suggestions.push("Over 2.5")
     suggestions.push("Over 1.5")
   }
-  if (home_total > 1 && away_total > 1) {
+  if (goalsTotal > 1) {
     if (suggestions.includes("Over 1.5")) {
 
     } else {
@@ -121,13 +121,13 @@ const result = () => {
     suggestions.push("Away Score 1")
   }
 
-  if (home_total >= 1 && home_total>= 1) {
+  if (home_total >= 1 && home_total >= 1) {
     if (suggestions.includes("Home Score 1")) {} else {
       suggestions.push("Home Score 1")
     }
   }
 
-  if (away_total>= 1 && away_total >= 1) {
+  if (away_total >= 1 && away_total >= 1) {
     if (suggestions.includes("Away Score 1")) {} else {
       suggestions.push("Away Score 1")
     }

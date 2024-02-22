@@ -10,30 +10,46 @@
 </head>
 
 <body>
-  <div class="container shadow h-100">
+  <div class="container shadow">
     <div class="row text-center">
       <div class="col-md">
 
         <h3>Home</h3>
         <label for="goal_scored_home">Average Goals Scored</label>
         <input type="number" id="goal_scored_home" class="rounded text-success">
+
         <label for="goal_concede_home">Average Goals Conceded</label>
         <input type="number" id="goal_concede_home" class="rounded text-danger">
+        <div>
+          <h6>
+            </6><label for="home_form">Recent Form</label></h6>
+          <input type="text" name="" id="home_form">
+        </div>
       </div>
 
       <div class="col-md">
         <h3>Away</h3>
-        <label for="goal_scored_away">Average Goals Scored</label>
+        <label for="goal_scored_away">
+          Average Goals Scored
+        </label>
         <input type="number" id="goal_scored_away" class="rounded text-success">
-        <label for="goal_concede_away">Average Goals Conceded</label>
+        <label for="goal_concede_away">
+          Average Goals Conceded
+        </label>
         <input type="number" id="goal_concede_away" class="rounded text-danger">
+
+        <div>
+          <h6>
+            </6><label for="away_form">Recent Form</label></h6>
+          <input type="text" name="" id="away_form">
+        </div>
       </div>
     </div>
-    <div class="text-center mt-2">
+    <div class="text-center m-2">
       <button class="btn btn-outline-info" id="check">Predict</button>
     </div>
     <div id="display" class="text-center">
-      
+
     </div>
   </div>
 

@@ -1,5 +1,10 @@
+let home_form = document.querySelector("#home_form")
+let away_form = document.querySelector("#away_form")
 let btn = document.querySelector("#check")
-
+let home_form_value;
+let away_form_value;
+let home_value;
+let away_value;
 let goal_scored_home = document.querySelector("#goal_scored_home")
 let goal_scored_away = document.querySelector("#goal_scored_away")
 let goal_conceded_home = document.querySelector("#goal_concede_home")
@@ -11,7 +16,6 @@ let home_goal_2
 let away_goal_1
 let away_goal_2
 
-//g=goal S=Scored C=concede h=home v= value
 let gShv;
 let gSav;
 let gChv;
@@ -27,8 +31,65 @@ let estimate_home;
 let estimate_away;
 
 
+/*function form_to_array(form) {
+  return form.split("")
+}
+
+let home_form_array = form_to_array(home_form_value)
+let away_form_array = form_to_array(away_form_value)*/
 
 
+function array_2_numbers(array) {
+  let counter = 0
+  //first array
+  if (array[0] === "l") {
+    counter += 5
+  } else if (array[0] == "d") {
+    counter += 2.5
+  } else if (array[0] == "w") {
+    counter += 1.25
+  }
+
+  //second array
+  if (array[1] === "l") {
+    counter += 4
+  } else if (array[1] == "d") {
+    counter += 2
+  } else if (array[1] == "w") {
+    counter += 1
+  }
+
+  //third array beginning of winning
+
+  if (array[2] === "w") {
+    counter += 5
+  } else if (array[2] == "d") {
+    counter += 2.5
+  } else if (array[2] == "l") {
+    counter += 0.75
+  }
+
+  //fourth array
+
+  if (array[3] === "w") {
+    counter += 4
+  } else if (array[3] == "d") {
+    counter += 2
+  } else if (array[3] == "l") {
+    counter += 1
+  }
+
+  //fifth array
+  if (array[4] === "w") {
+    counter += 3
+  } else if (array[4] == "d") {
+    counter += 1.5
+  } else if (array[4] == "l") {
+    counter += 0.75
+  }
+
+  return counter / 21
+}
 
 function score() {
   gShv = +goal_scored_home.value
@@ -39,16 +100,15 @@ function score() {
 
 
   //based on the logic of concede
-
-  //getting concede mean and adding extra difficult not get 100% that is reason of multilplying the mean by 1.5
+  //getting concede mean and adding extra difficult not get 100%
   let concede_mean = ((gChv + gCav) / 2) * 1.5;
   //using away to determine how home will concede base
-  home_goal_ratio = gCav / concede_mean;
+  home_goal_ratio = +gCav / concede_mean;
   //using home to determine how away will concede
-  away_goal_ratio = gChv / concede_mean;
+  away_goal_ratio = +gChv / concede_mean;
 
   //Multiply personal average goal With opponents average concede
-  home_score_ratio = gShv * gCav;
+  home_score_ratio = +gShv * +gCav;
   away_score_ratio = gSav * gChv;
 
   let totals = (gSav + gShv)
@@ -61,35 +121,153 @@ function score() {
 
 
 function goal_method(a, b) {
-  return a * b
+  return +a * +b
 }
 
 
 
 const result = () => {
   score()
+  home_form_value = home_form.value;
+  away_form_value = away_form.value;
 
-  home_goal_1 = goal_method(home_score_ratio, home_goal_ratio)
+  function form_to_array(form) {
+    return form.split("")
+  }
+
+  let home_form_array = form_to_array(home_form_value)
+  let away_form_array = form_to_array(away_form_value)
+
+  //form values
+  home_value = array_2_numbers(home_form_array)
+
+
+  away_value = array_2_numbers(away_form_array)
+  //console.log(home_value, away_value)
+
+
+  home_goal_1 = goal_method(+home_score_ratio, +home_goal_ratio)
+
   away_goal_1 = goal_method(away_score_ratio, away_goal_ratio)
-
 
   home_goal_2 = goal_method(estimated_goal, estimate_home)
 
   away_goal_2 = goal_method(estimated_goal, estimate_away)
 
+  let win_goal_home1 = goal_method(inverse_value(away_value), home_goal_ratio)
+  let win_goal_away1 = goal_method(inverse_value(home_value), away_goal_ratio)
+
+  let win_goal_home2 = goal_method(inverse_value(away_value), estimate_home)
+
+  let win_goal_away2 = goal_method(inverse_value(home_value), estimate_away)
+
+  //Only for Scores
 
   let final_goal_home_1 = goal(home_goal_1)
   let final_goal_away_1 = goal(away_goal_1)
 
   let final_goal_home_2 = goal(home_goal_2)
   let final_goal_away_2 = goal(away_goal_2)
+  //console.log(home_goal_2,away_goal_2)
 
-  
+  //for wins
+  let home1 = goal(win_goal_home1)
+  let away1 = goal(win_goal_away1)
+  let home2 = goal(win_goal_home2)
+  let away2 = goal(win_goal_away2)
 
-  let home_total = goal(((final_goal_home_1 + final_goal_home_2) / 2))
-  let away_total = goal(((final_goal_away_1 + final_goal_away_2) / 2))
+
+
+  //comparing Scores
+  let a = 0
+  let d = 0
+  let h = 0
+
+  //final goal 1
+
+  if (compare_score(final_goal_home_1, final_goal_away_1) == "h") {
+    h += 1
+  } else if (compare_score(final_goal_home_1, final_goal_away_1) == "a") {
+    a += 1
+  } else if (compare_score(final_goal_home_1, final_goal_away_1) == "d") {
+    d += 1
+  }
+
+
+
+  //final goal
+
+  if (compare_score(final_goal_home_2, final_goal_away_2) == "h") {
+    h += 1
+  } else if (compare_score(final_goal_home_2, final_goal_away_2) == "a") {
+    a += 1
+  } else if (compare_score(final_goal_home_2, final_goal_away_2) == "d") {
+    d += 1
+  }
+
+
+  //for win 1
+
+
+  if (compare_score(home1, away1) == "h") {
+    h += 1
+  } else if (compare_score(home1, away1) == "a") {
+    a += 1
+  } else if (compare_score(home1, away1) == "d") {
+    d += 1
+  }
+
+
+  //for win 2
+
+  if (compare_score(home2, away2) == "h") {
+    h += 1
+  } else if (compare_score(home2, away2) == "a") {
+    a += 1
+  } else if (compare_score(home2, away2) == "d") {
+    d += 1
+  }
+
+
+
+  let totalwin = h + d + a
+
+  let homeWin = (h / totalwin) * 100
+  let awayWin = (a / totalwin) * 100
+  let drawWin = (d / totalwin) * 100
+  //console.log(homeWin, drawWin, awayWin)
+  gScore = `${final_goal_home_1}:${final_goal_away_1}
+${final_goal_home_2}:${final_goal_away_2}
+....
+${home1}:${away1}
+${home2}:${away2}
+`
+
+  //start
+
+
+  let home_total = goal2(((final_goal_home_1 + final_goal_home_2) / 2))
+  let away_total = goal2(((final_goal_away_1 + final_goal_away_2) / 2))
   let goalsTotal = home_total + away_total
+  //console.log(home_total, away_total)
+
+  let home_total2 = goal2(((home1 + home2) / 2))
+  let away_total2 = goal2(((away1 + away2) / 2))
+
+  let home = goal2(((home_total + home_total2) / 2))
+  let away = goal2(((away_total + away_total2) / 2))
+  //console.log(home_total2, away_total2)
+  if (home > away) {
+    choice = `Home ${homeWin}`
+  } else if (home < away) {
+    choice = `Away ${awayWin}`
+  } else {
+    choice = `Draw ${drawWin}`
+  }
+  //console.log(gScore)
+
   let correct_score = `${home_total}:${away_total}`
+  let winPrediction = `${home}:${away}`
 
 
 
@@ -99,7 +277,7 @@ const result = () => {
     suggestions.push("Both Teams to Score")
   }
 
-  if (goalsTotal>2) {
+  if (goalsTotal > 2) {
     suggestions.push("Over 2.5")
     suggestions.push("Over 1.5")
   }
@@ -140,6 +318,9 @@ const result = () => {
   let random = Math.floor(Math.random() * suggestions.length)
   let random_Choice = suggestions[random]
 
+
+  //fininsh
+
   display.innerHTML =
     `
   <p> possible Correct score:
@@ -153,14 +334,16 @@ const result = () => {
   }
 
   display.innerHTML += `<p>Random Choice: <h3>${random_Choice}</h3></p>
+<p>For Win: ${winPrediction}  ${choice}</p>
 `
-
 }
 
 
-/*
-Function below is used to approximate the possible goal
-*/
+
+
+function inverse_value(num) {
+  return 1 / num
+}
 
 function goal(goal) {
   let result;
@@ -183,8 +366,40 @@ function goal(goal) {
   }
   return result
 }
-//Still no styling
 
+function goal2(goal) {
+  let result;
+  let goal_midi = Math.floor(goal);
+  let goal_mini = goal - goal_midi
+
+
+  if (goal < 1) {
+    if (goal_mini > 0.79) {
+      result = Math.ceil(goal)
+    } else {
+      result = Math.floor(goal)
+    }
+  } else {
+    if (goal_mini >= 0.5) {
+      result = Math.ceil(goal)
+    } else {
+      result = Math.floor(goal)
+    }
+  }
+  return result
+}
+
+
+
+function compare_score(home, away) {
+  if (home > away) {
+    return "h"
+  } else if (home < away) {
+    return "a"
+  } else {
+    return "d"
+  }
+}
 
 btn.addEventListener("click", result)
 //console.log(goal(0.6))

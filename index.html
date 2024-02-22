@@ -16,14 +16,14 @@
 
         <h3>Home</h3>
         <label for="goal_scored_home">Average Goals Scored</label>
-        <input type="number" id="goal_scored_home" class="rounded text-success">
+        <input type="number" id="goal_scored_home" class="rounded text-success" placeholder="0.85">
 
         <label for="goal_concede_home">Average Goals Conceded</label>
-        <input type="number" id="goal_concede_home" class="rounded text-danger">
+        <input type="number" id="goal_concede_home" class="rounded text-danger" placeholder="1.89">
         <div>
           <h6>
             </6><label for="home_form">Recent Form</label></h6>
-          <input type="text" name="" id="home_form">
+          <input type="text" name="" id="home_form" class="rounded text-info" maxlength="5" placeholder="lldwd">
         </div>
       </div>
 
@@ -32,25 +32,42 @@
         <label for="goal_scored_away">
           Average Goals Scored
         </label>
-        <input type="number" id="goal_scored_away" class="rounded text-success">
+        <input type="number" id="goal_scored_away" class="rounded text-success" placeholder="1.58">
         <label for="goal_concede_away">
           Average Goals Conceded
         </label>
-        <input type="number" id="goal_concede_away" class="rounded text-danger">
+        <input type="number" id="goal_concede_away" class="rounded text-danger" placeholder="1.22">
 
         <div>
           <h6>
             </6><label for="away_form">Recent Form</label></h6>
-          <input type="text" name="" id="away_form">
+          <input type="text" name="" id="away_form" class="rounded text-info" maxlength="5" placeholder="wwllw">
         </div>
       </div>
     </div>
     <div class="text-center m-2">
-      <button class="btn btn-outline-info" id="check">Predict</button>
+      <button class="btn btn-outline-warning" id="check">Predict</button>
     </div>
     <div id="display" class="text-center">
 
     </div>
+    <div class="text-center">
+      <span class="display-1">How To Use</span>
+      <p>Input all the values. Input average goals scored, average goals conceded by a particular team. Don't mix it up, make sure you don't input any data for away in the home field and vice versa. If you looking for where to get data visit <a href="https://footystats.org">Footystat</a> </p>
+      <p>Any match you want to predict, open each team on a new tab. You will see the required data with recent form included. Type recent form from the latest(right-most) to the last. It is five in number, input w for win, d for draw and l for lose To reduce error make sure to input every data in its right field</p>
+      <span class="display-2">Understanding The Result</span>
+      <ol>
+        <li>Possible Correct Score is the result gotten after comparing the goals scored and conceded by both teams</li>
+        <li>Possible Outcomes is based on the possible correct score.</li>
+        <li>Random Choice is a random selection from the possible outcome</li>
+        <li>Winning Prediction is the actual 1X2 prediction and it will not work without the recent form. Somethings the result may contradict with possible correct score that is because of recent inform is not used in the possible correct score. The prediction accuracy is included, 75% and 100% are the best.</li>
+      </ol>
+    </div>
+    <footer class="tex-center">
+      <span class="display-4">Coded by Anyanwu Johnbosco Chima</span>
+      <p><a href="https://github.com/bigDevBosco">Github Profile</a></p>
+      <p>Open for project collaboration. I Want the data to be automatic instead of manual, that will be the work of API. I am open for collaboration. It is open source project. Check out the <a href="https://github.com/bigDevBosco/Chi-Supreme-Predictor.git">Repository</a> and collaborate. One Love</p>
+    </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

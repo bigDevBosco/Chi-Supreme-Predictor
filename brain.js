@@ -258,11 +258,14 @@ ${home2}:${away2}
   let away = goal2(((away_total + away_total2) / 2))
   //console.log(home_total2, away_total2)
   if (home > away) {
-    choice = `Home ${homeWin}`
+    choice = `Home`
+    info = `Prediction Accuracy: ${homeWin}%`
   } else if (home < away) {
-    choice = `Away ${awayWin}`
+    choice = `Away`
+    info = `Prediction Accuracy: ${awayWin}%`
   } else {
-    choice = `Draw ${drawWin}`
+    choice = `Draw`
+    info = `Prediction Accuracy: ${drawWin}%`
   }
   //console.log(gScore)
 
@@ -329,12 +332,14 @@ ${home2}:${away2}
   <p>Possible Outcomes:</p>
   `
   for (suggestion of suggestions) {
-    display.innerHTML += `<h4>${suggestion}</h4>
+    display.innerHTML += `<p class="display-5">${suggestion}</p>
     `
   }
 
-  display.innerHTML += `<p>Random Choice: <h3>${random_Choice}</h3></p>
-<p>For Win: ${winPrediction}  ${choice}</p>
+  display.innerHTML += `<p>Random Choice: <span class="display-5">${random_Choice}</span></p>
+<p>Winning Prediction</p>
+<p> <span class="display-3">${choice}</span></p>
+<p>${info}</p>
 `
 }
 
@@ -400,6 +405,8 @@ function compare_score(home, away) {
     return "d"
   }
 }
+
+
 
 btn.addEventListener("click", result)
 //console.log(goal(0.6))

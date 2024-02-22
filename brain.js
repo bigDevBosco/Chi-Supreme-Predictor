@@ -61,31 +61,31 @@ function array_2_numbers(array) {
 
   //third array beginning of winning
 
-  if (array[2] === "w") {
-    counter += 5
+  if (array[2] === "l") {
+    counter += 3
   } else if (array[2] == "d") {
-    counter += 2.5
-  } else if (array[2] == "l") {
+    counter += 1.50
+  } else if (array[2] == "w") {
     counter += 0.75
   }
 
   //fourth array
 
-  if (array[3] === "w") {
-    counter += 4
-  } else if (array[3] == "d") {
+  if (array[3] === "l") {
     counter += 2
-  } else if (array[3] == "l") {
+  } else if (array[3] == "d") {
     counter += 1
+  } else if (array[3] == "w") {
+    counter += 0.5
   }
 
   //fifth array
-  if (array[4] === "w") {
-    counter += 3
+  if (array[4] === "l") {
+    counter += 1
   } else if (array[4] == "d") {
-    counter += 1.5
-  } else if (array[4] == "l") {
-    counter += 0.75
+    counter += 0.5
+  } else if (array[4] == "w") {
+    counter += 0.25
   }
 
   return counter / 21

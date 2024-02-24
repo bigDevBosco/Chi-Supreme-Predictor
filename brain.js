@@ -61,34 +61,34 @@ function array_2_numbers(array) {
 
   //third array beginning of winning
 
-  if (array[2] === "l") {
+  if (array[2] === "w") {
     counter += 3
   } else if (array[2] == "d") {
     counter += 1.50
-  } else if (array[2] == "w") {
+  } else if (array[2] == "l") {
     counter += 0.75
   }
 
   //fourth array
 
-  if (array[3] === "l") {
+  if (array[3] === "w") {
     counter += 2
   } else if (array[3] == "d") {
     counter += 1
-  } else if (array[3] == "w") {
+  } else if (array[3] == "l") {
     counter += 0.5
   }
 
   //fifth array
-  if (array[4] === "l") {
+  if (array[4] === "w") {
     counter += 1
   } else if (array[4] == "d") {
     counter += 0.5
-  } else if (array[4] == "w") {
+  } else if (array[4] == "l") {
     counter += 0.25
   }
 
-  return counter / 21
+  return counter / 15
 }
 
 function score() {
@@ -143,10 +143,10 @@ const result = () => {
 
 
   away_value = array_2_numbers(away_form_array)
-  //console.log(home_value, away_value)
+  
 
 
-  home_goal_1 = goal_method(+home_score_ratio, +home_goal_ratio)
+  home_goal_1 = goal_method(home_score_ratio, home_goal_ratio)
 
   away_goal_1 = goal_method(away_score_ratio, away_goal_ratio)
 
@@ -156,9 +156,8 @@ const result = () => {
 
   let win_goal_home1 = goal_method(inverse_value(away_value), home_goal_ratio)
   let win_goal_away1 = goal_method(inverse_value(home_value), away_goal_ratio)
-
+  //Possible change to estimate
   let win_goal_home2 = goal_method(inverse_value(away_value), estimate_home)
-
   let win_goal_away2 = goal_method(inverse_value(home_value), estimate_away)
 
   //Only for Scores
@@ -276,6 +275,7 @@ ${home2}:${away2}
 
   let correct_score = `${home_total}:${away_total}`
   let winPrediction = `${home}:${away}`
+  console.log(winPrediction)
 
 
 

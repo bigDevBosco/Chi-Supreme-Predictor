@@ -422,3 +422,4 @@ function compare_score(home, away) {
 
 btn.addEventListener("click", result)
 //console.log(goal(0.6))
+//Still testing

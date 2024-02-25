@@ -153,13 +153,13 @@ const result = () => {
   home_goal_2 = goal_method(estimated_goal, estimate_home)
 
   away_goal_2 = goal_method(estimated_goal, estimate_away)
-
+/* Obselete
   let win_goal_home1 = goal_method(inverse_value(away_value), home_goal_ratio)
   let win_goal_away1 = goal_method(inverse_value(home_value), away_goal_ratio)
 
   let win_goal_home2 = goal_method(inverse_value(away_value), estimate_home)
 
-  let win_goal_away2 = goal_method(inverse_value(home_value), estimate_away)
+  let win_goal_away2 = goal_method(inverse_value(home_value), estimate_away)*/
 
   //Only for Scores
 
@@ -171,10 +171,10 @@ const result = () => {
   //console.log(home_goal_2,away_goal_2)
 
   //for wins
-  let home1 = goal(win_goal_home1)
-  let away1 = goal(win_goal_away1)
-  let home2 = goal(win_goal_home2)
-  let away2 = goal(win_goal_away2)
+  let home1 = goal(home_goal_1*inverse_value(away_value))
+  let away1 = goal(away_goal_1*inverse_value(home_value))
+  let home2 = goal(home_goal_2*inverse_value(away_value))
+  let away2 = goal(away_goal_2*inverse_value(home_value))
 
 
 

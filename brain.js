@@ -33,14 +33,6 @@ let estimate_home;
 let estimate_away;
 
 
-/*function form_to_array(form) {
-  return form.split("")
-}
-
-let home_form_array = form_to_array(home_form_value)
-let away_form_array = form_to_array(away_form_value)*/
-
-
 function array_2_numbers(array) {
   let counter = 0
   //first array
@@ -63,38 +55,31 @@ function array_2_numbers(array) {
 
   //third array beginning of winning
 
-  if (array[2] === "w") {
+  if (array[2] === "l") {
     counter += 3
   } else if (array[2] == "d") {
-
     counter += 1.50
-  } else if (array[2] == "l") {
-    counter += 0.75
   } else if (array[2] == "w") {
-    counter += 0.1875
+    counter += 0.75
   }
 
   //fourth array
 
-  if (array[3] === "w") {
+  if (array[3] === "l") {
     counter += 2
   } else if (array[3] == "d") {
     counter += 1
-  } else if (array[3] == "l") {
-    counter += 0.5
   } else if (array[3] == "w") {
-    counter += 0.125
+    counter += 0.5
   }
 
   //fifth array
-  if (array[4] === "w") {
+  if (array[4] === "l") {
     counter += 1
   } else if (array[4] == "d") {
     counter += 0.5
-  } else if (array[4] == "l") {
-    counter += 0.25
   } else if (array[4] == "w") {
-    counter += 0.0625
+    counter += 0.25
   }
 
   return counter / 15
@@ -152,7 +137,7 @@ const result = () => {
 
 
   away_value = array_2_numbers(away_form_array)
-  
+
 
 
   home_goal_1 = goal_method(home_score_ratio, home_goal_ratio)
@@ -163,13 +148,7 @@ const result = () => {
 
   away_goal_2 = goal_method(estimated_goal, estimate_away)
 
-  let est = 1 / (estimated_goal * 1.5)
 
-  let win_goal_home1 = home_value * home_goal_1
-  let win_goal_away1 = away_value * away_goal_1
-  let win_goal_home2 = home_value * home_goal_2
-  let win_goal_away2 = away_value * away_goal_2
-  //console.log(estimated_goal)
 
 
   //Only for Scores
@@ -179,14 +158,17 @@ const result = () => {
 
   let final_goal_home_2 = goal(home_goal_2)
   let final_goal_away_2 = goal(away_goal_2)
-  //console.log(home_goal_2,away_goal_2)
 
+  let winH = inverse_value(away_value)
+  let winA = inverse_value(home_value)
   //for wins
-  let home1 = goal(win_goal_home1)
-  let away1 = goal(win_goal_away1)
-  let home2 = goal(win_goal_home2)
-  let away2 = goal(win_goal_away2)
 
+  let home_total = goal2(((final_goal_home_1 + final_goal_home_2) / 2))
+  let away_total = goal2(((final_goal_away_1 + final_goal_away_2) / 2))
+  let goalsTotal = home_total + away_total
+
+  let home1 = goal(winH / 2)
+  let away1 = goal(winA / 2)
 
 
   //comparing Scores
@@ -231,16 +213,6 @@ const result = () => {
 
   //for win 2
 
-  if (compare_score(home2, away2) == "h") {
-    h += 1
-  } else if (compare_score(home2, away2) == "a") {
-    a += 1
-  } else if (compare_score(home2, away2) == "d") {
-    d += 1
-  }
-
-
-
   let totalwin = h + d + a
 
   let homeWin = (h / totalwin) * 100
@@ -251,45 +223,133 @@ const result = () => {
 ${final_goal_home_2}:${final_goal_away_2}
 ....
 ${home1}:${away1}
-${home2}:${away2}
 `
+  console.log(gScore)
 
   //start
 
 
-  let home_total = goal2(((final_goal_home_1 + final_goal_home_2) / 2))
-  let away_total = goal2(((final_goal_away_1 + final_goal_away_2) / 2))
-  let goalsTotal = home_total + away_total
-  //console.log(home_total, away_total)
+  let ho_me = 0;
+  let aw_ay = 0;
+  let dr_aw = 0;
+  let combo;
 
-  let home_total2 = goal2(((home1 + home2) / 2))
-  let away_total2 = goal2(((away1 + away2) / 2))
-
-  let home = goal2(((home_total + home_total2) / 2))
-  let away = goal2(((away_total + away_total2) / 2))
-  //console.log(home_total2, away_total2)
-  if (home_form_value && away_form_value && gShv && gSav && gChv && gCav) {
-    if (home > away) {
-      choice = `Home`
-      info = `Prediction Accuracy: ${homeWin}%`
-    } else if (home < away) {
-      choice = `Away`
-      info = `Prediction Accuracy: ${awayWin}%`
+  if (home_total > away_total) {
+    combo = home_total + away_total + 1;
+    ho_me += (home_total / combo) * 100;
+    aw_ay += (away_total / combo) * 100;
+  } else if (away_total > home_total) {
+    combo = home_total + away_total + 1;
+    aw_ay += (away_total / combo) * 100;
+    ho_me += (home_total / combo) * 100;
+  } else {
+    if (home_total == 0) {
+      dr_aw = (3 / 4) * 100
+    } else if (home_total == 1) {
+      dr_aw = (2 / 3) * 100
     } else {
-      choice = `Draw`
-      info = `Prediction Accuracy: ${drawWin}%`
+      dr_aw = (1 / 2) * 100
+    }
+    ho_me += 0;
+    aw_ay += 0;
+  }
+
+  if (home1 > away1) {
+    combo = home1 + away1 + 1;
+    ho_me += (home1 / combo) * 100;
+  } else if (home1 < away1) {
+    combo = home1 + away1 + 1;
+    aw_ay += (away1 / combo) * 100
+  } else {
+
+    if (home1 == 0) {
+      dr_aw = (3 / 4) * 100
+    } else if (home1 == 1) {
+      dr_aw = (2 / 3) * 100
+    } else {
+      dr_aw = (1 / 2) * 100
+    }
+    ho_me += 0;
+    aw_ay += 0;
+
+  }
+
+  ho_me = (ho_me / 2).toFixed(2);
+  aw_ay = (aw_ay / 2).toFixed(2);
+  dr_aw = (dr_aw / 2).toFixed(2);
+  console.log(ho_me, dr_aw, aw_ay)
+  let dif;
+  if (home_form_value && away_form_value && gShv && gSav && gChv && gCav) {
+
+    if (ho_me > dr_aw && ho_me > aw_ay) {
+      if (aw_ay <= 0 && dr_aw <= 0) {
+        dif = ho_me;
+        choice = `HOME`
+        info = `Prediction Value ${dif}`
+      } else {
+        if (aw_ay > dr_aw) {
+          dif = ho_me - aw_ay
+          choice = "Home"
+          info = `Prediction Value ${dif}`
+        } else if (aw_ay < dr_aw) {
+          dif = ho_me - dr_aw;
+          choice = `Home`
+          info = `Prediction Value ${dif}`;
+        } else if (aw_ay == dr_aw) {
+
+        }
+      }
+    } else if (dr_aw > ho_me && dr_aw > aw_ay) {
+      if (ho_me <= 0 && aw_ay <= 0) {
+        dif = dr_aw
+        choice = `DRAW`
+        info = `Prediction Value ${dif}`
+      } else {
+        if (ho_me > aw_ay) {
+          dif = dr_aw - ho_me
+          choice = "Draw"
+          info = `Prediction Value ${dif}`
+        } else if (ho_me < aw_ay) {
+          dif = dr_aw - aw_ay
+          choice = `Draw`
+          info = `Prediction Value ${dif}`
+        } else if (ho_me == aw_ay) {
+
+        }
+      }
+    } else if (aw_ay > dr_aw && aw_ay > ho_me) {
+      if (ho_me <= 0 && dr_aw <= 0) {
+        dif = aw_ay;
+        info = `Prediction Value ${dif}`
+        choice = `AWAY`
+      } else {
+        if (dr_aw > ho_me) {
+          dif = aw_ay - dr_aw
+          info = `Prediction Value ${dif}`
+          choice = `Away`
+        } else if (dr_aw < ho_me) {
+          dif = aw_ay - ho_me
+          info = `Prediction Value ${dif}`
+          choice = `Away`
+        } else if (ho_me == dr_aw) {
+
+        }
+      }
+
     }
   } else {
     choice = `Some Data missing`
     info = null
   }
+
+
+
+
   //console.log(gScore)
 
   let correct_score = `${home_total}:${away_total}`
-  let winPrediction = `${home}:${away}`
-  console.log(winPrediction)
+  let winPrediction = `${home1}:${away1}`
 
-  console.log(home_value, away_value)
 
   let suggestions = []
 
@@ -438,34 +498,28 @@ goal_scored_away.value = randomizer()
 goal_conceded_home.value = randomizer()
 goal_conceded_away.value = randomizer()
 
-const random_form = () => {
-  let f_array = ["w", "l", "d"]
-  let f_random = Math.floor(Math.random() * 3)
-  let f_random2 = Math.floor(Math.random() * 3)
-  let f_random3 = Math.floor(Math.random() * 3)
-  let f_random4 = Math.floor(Math.random() * 3)
-  let f_random5 = Math.floor(Math.random() * 3)
 
+let f_array = ["w", "l", "d"]
+const caller = () => {
+  return f_random = Math.floor(Math.random() * 3)
+
+}
+
+const random_form = () => {
   let f_sug = []
   let f;
-  let t1 = f_array[f_random]
-  f_sug.push(t1)
-  let t2 = f_array[f_random2]
-  f_sug.push(t2)
-  let t3 = f_array[f_random3]
-  f_sug.push(t3)
-  let t4 = f_array[f_random4]
-  f_sug.push(t4)
-  let t5 = f_array[f_random5]
-  f_sug.push(t5)
+
+  for (i = 0; i < 5; i++) {
+    f = f_array[caller()]
+    f_sug.push(f)
+  }
+
+
   return f_sug.join("")
 }
+
 
 home_form.value = random_form()
 away_form.value = random_form()
 
 btn.addEventListener("click", result)
-//console.log(goal(0.6))
-//Still testing
-
-// t = (e/2)

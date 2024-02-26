@@ -11,6 +11,8 @@ let goal_conceded_home = document.querySelector("#goal_concede_home")
 let goal_conceded_away = document.querySelector("#goal_concede_away")
 let display = document.querySelector("#display")
 
+
+
 let home_goal_1
 let home_goal_2
 let away_goal_1
@@ -45,18 +47,18 @@ function array_2_numbers(array) {
   if (array[0] === "l") {
     counter += 5
   } else if (array[0] == "d") {
-    counter += 2.5
-  } else if (array[0] == "w") {
     counter += 1.25
+  } else if (array[0] == "w") {
+    counter += 0.3125
   }
 
   //second array
   if (array[1] === "l") {
     counter += 4
   } else if (array[1] == "d") {
-    counter += 2
-  } else if (array[1] == "w") {
     counter += 1
+  } else if (array[1] == "w") {
+    counter += 0.25
   }
 
   //third array beginning of winning
@@ -64,9 +66,9 @@ function array_2_numbers(array) {
   if (array[2] === "l") {
     counter += 3
   } else if (array[2] == "d") {
-    counter += 1.50
-  } else if (array[2] == "w") {
     counter += 0.75
+  } else if (array[2] == "w") {
+    counter += 0.1875
   }
 
   //fourth array
@@ -74,21 +76,21 @@ function array_2_numbers(array) {
   if (array[3] === "l") {
     counter += 2
   } else if (array[3] == "d") {
-    counter += 1
-  } else if (array[3] == "w") {
     counter += 0.5
+  } else if (array[3] == "w") {
+    counter += 0.125
   }
 
   //fifth array
   if (array[4] === "l") {
     counter += 1
   } else if (array[4] == "d") {
-    counter += 0.5
-  } else if (array[4] == "w") {
     counter += 0.25
+  } else if (array[4] == "w") {
+    counter += 0.0625
   }
 
-  return counter / 21
+  return counter / 15
 }
 
 function score() {
@@ -146,20 +148,21 @@ const result = () => {
   //console.log(home_value, away_value)
 
 
-  home_goal_1 = goal_method(+home_score_ratio, +home_goal_ratio)
+  home_goal_1 = goal_method(home_score_ratio, home_goal_ratio)
 
   away_goal_1 = goal_method(away_score_ratio, away_goal_ratio)
 
   home_goal_2 = goal_method(estimated_goal, estimate_home)
 
   away_goal_2 = goal_method(estimated_goal, estimate_away)
-/* Obselete
-  let win_goal_home1 = goal_method(inverse_value(away_value), home_goal_ratio)
-  let win_goal_away1 = goal_method(inverse_value(home_value), away_goal_ratio)
 
-  let win_goal_home2 = goal_method(inverse_value(away_value), estimate_home)
+  let est = 1 / (estimated_goal * 1.5)
 
-  let win_goal_away2 = goal_method(inverse_value(home_value), estimate_away)*/
+  let win_goal_home1 = home_value * home_goal_1
+  let win_goal_away1 = away_value * away_goal_1
+  let win_goal_home2 = home_value * home_goal_2
+  let win_goal_away2 = away_value * away_goal_2
+  //console.log(estimated_goal)
 
   //Only for Scores
 
@@ -171,10 +174,10 @@ const result = () => {
   //console.log(home_goal_2,away_goal_2)
 
   //for wins
-  let home1 = goal(home_goal_1*inverse_value(away_value))
-  let away1 = goal(away_goal_1*inverse_value(home_value))
-  let home2 = goal(home_goal_2*inverse_value(away_value))
-  let away2 = goal(away_goal_2*inverse_value(home_value))
+  let home1 = goal(win_goal_home1)
+  let away1 = goal(win_goal_away1)
+  let home2 = goal(win_goal_home2)
+  let away2 = goal(win_goal_away2)
 
 
 
@@ -277,7 +280,7 @@ ${home2}:${away2}
   let correct_score = `${home_total}:${away_total}`
   let winPrediction = `${home}:${away}`
 
-
+  console.log(home_value, away_value)
 
   let suggestions = []
 
@@ -343,7 +346,7 @@ ${home2}:${away2}
 
   display.innerHTML += `<p>Random Choice: <span class="display-5">${random_Choice}</span></p>
 <p>Winning Prediction</p>
-<p> <span class="display-3">${choice}</span></p>
+<p> <span class="display-3">${choice}  ${winPrediction}</span></p>
 <p>${info}</p>
 `
 
@@ -417,9 +420,43 @@ function compare_score(home, away) {
     return "d"
   }
 }
+const randomizer = () => {
+  return (Math.random() * 3).toFixed(2)
+}
+//console.log(randomizer())
+goal_scored_home.value = randomizer()
+goal_scored_away.value = randomizer()
+goal_conceded_home.value = randomizer()
+goal_conceded_away.value = randomizer()
 
+const random_form = () => {
+  let f_array = ["w", "l", "d"]
+  let f_random = Math.floor(Math.random() * 3)
+  let f_random2 = Math.floor(Math.random() * 3)
+  let f_random3 = Math.floor(Math.random() * 3)
+  let f_random4 = Math.floor(Math.random() * 3)
+  let f_random5 = Math.floor(Math.random() * 3)
 
+  let f_sug = []
+  let f;
+  let t1 = f_array[f_random]
+  f_sug.push(t1)
+  let t2 = f_array[f_random2]
+  f_sug.push(t2)
+  let t3 = f_array[f_random3]
+  f_sug.push(t3)
+  let t4 = f_array[f_random4]
+  f_sug.push(t4)
+  let t5 = f_array[f_random5]
+  f_sug.push(t5)
+  return f_sug.join("")
+}
+
+home_form.value = random_form()
+away_form.value = random_form()
 
 btn.addEventListener("click", result)
 //console.log(goal(0.6))
 //Still testing
+
+// t = (e/2)

@@ -167,8 +167,8 @@ const result = () => {
   let away_total = goal2(((final_goal_away_1 + final_goal_away_2) / 2))
   let goalsTotal = home_total + away_total
 
-  let home1 = goal(winH / 2)
-  let away1 = goal(winA / 2)
+  let home1 = goal(winH)
+  let away1 = goal(winA)
 
 
   //comparing Scores

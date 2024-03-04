@@ -55,21 +55,21 @@ function array_2_numbers(array) {
 
   //third array beginning of winning
 
-  if (array[2] === "l") {
+  if (array[2] === "w") {
     counter += 3
   } else if (array[2] == "d") {
     counter += 1.50
-  } else if (array[2] == "w") {
+  } else if (array[2] == "l") {
     counter += 0.75
   }
 
   //fourth array
 
-  if (array[3] === "l") {
+  if (array[3] === "w") {
     counter += 2
   } else if (array[3] == "d") {
     counter += 1
-  } else if (array[3] == "w") {
+  } else if (array[3] == "l") {
     counter += 0.5
   }
 

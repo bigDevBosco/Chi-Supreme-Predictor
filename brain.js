@@ -3,8 +3,13 @@ let away_form = document.querySelector("#away_form")
 let btn = document.querySelector("#check")
 let home_form_value;
 let away_form_value;
+
 let home_value;
 let away_value;
+
+let home_value_w;
+let away_value_w;
+
 let goal_scored_home = document.querySelector("#goal_scored_home")
 let goal_scored_away = document.querySelector("#goal_scored_away")
 let goal_conceded_home = document.querySelector("#goal_concede_home")
@@ -18,10 +23,22 @@ let home_goal_2
 let away_goal_1
 let away_goal_2
 
+let home_goal_1_w
+let home_goal_2_w
+let away_goal_1_w
+let away_goal_2_w
+
+
 let gShv;
 let gSav;
 let gChv;
 let gCav;
+
+let gShv_w;
+let gSav_w;
+let gChv_w;
+let gCav_w;
+
 
 let home_score_ratio;
 let away_score_ratio;
@@ -31,6 +48,16 @@ let away_goal_ratio;
 let estimated_goal;
 let estimate_home;
 let estimate_away;
+
+let home_score_ratio_w;
+let away_score_ratio_w;
+let home_goal_ratio_w;
+let away_goal_ratio_w;
+
+let estimated_goal_w;
+let estimate_home_w;
+let estimate_away_w;
+
 
 
 function array_2_numbers(array) {
@@ -55,6 +82,59 @@ function array_2_numbers(array) {
 
   //third array beginning of winning
 
+  if (array[2] === "l") {
+    counter += 3
+  } else if (array[2] == "d") {
+    counter += 1.50
+  } else if (array[2] == "w") {
+    counter += 0.75
+  }
+
+  //fourth array
+
+  if (array[3] === "w") {
+    counter += 2
+  } else if (array[3] == "d") {
+    counter += 1
+  } else if (array[3] == "l") {
+    counter += 0.5
+  }
+
+  //fifth array
+  if (array[4] === "w") {
+    counter += 1
+  } else if (array[4] == "d") {
+    counter += 0.5
+  } else if (array[4] == "l") {
+    counter += 0.25
+  }
+
+  return counter / 15
+}
+
+/***/
+function array_2_numbers_w(array) {
+  let counter = 0
+  //first array
+  if (array[0] === "w") {
+    counter += 5
+  } else if (array[0] == "d") {
+    counter += 1.25
+  } else if (array[0] == "l") {
+    counter += 0.3125
+  }
+
+  //second array
+  if (array[1] === "w") {
+    counter += 4
+  } else if (array[1] == "d") {
+    counter += 1
+  } else if (array[1] == "l") {
+    counter += 0.25
+  }
+
+  //third array beginning of winning
+
   if (array[2] === "w") {
     counter += 3
   } else if (array[2] == "d") {
@@ -74,16 +154,22 @@ function array_2_numbers(array) {
   }
 
   //fifth array
-  if (array[4] === "l") {
+  if (array[4] === "w") {
     counter += 1
   } else if (array[4] == "d") {
     counter += 0.5
-  } else if (array[4] == "w") {
+  } else if (array[4] == "l") {
     counter += 0.25
   }
 
   return counter / 15
 }
+/***/
+
+function form_to_array(form) {
+  return form.split("")
+}
+
 
 function score() {
   gShv = +goal_scored_home.value
@@ -114,6 +200,13 @@ function score() {
 }
 
 
+
+
+
+
+
+
+
 function goal_method(a, b) {
   return +a * +b
 }
@@ -125,9 +218,6 @@ const result = () => {
   home_form_value = home_form.value;
   away_form_value = away_form.value;
 
-  function form_to_array(form) {
-    return form.split("")
-  }
 
   let home_form_array = form_to_array(home_form_value)
   let away_form_array = form_to_array(away_form_value)
@@ -138,6 +228,10 @@ const result = () => {
 
   away_value = array_2_numbers(away_form_array)
 
+  home_value_w = array_2_numbers_w(home_form_array)
+
+
+  away_value_w = array_2_numbers_w(away_form_array)
 
 
   home_goal_1 = goal_method(home_score_ratio, home_goal_ratio)
@@ -148,7 +242,62 @@ const result = () => {
 
   away_goal_2 = goal_method(estimated_goal, estimate_away)
 
+  /***/
 
+  gShv_w = inverse_value(away_value)
+  gSav_w = inverse_value(home_value)
+
+  gChv_w = inverse_value(home_value_w)
+  gCav_w = inverse_value(away_value_w)
+
+
+  //based on the logic of concede
+  //getting concede mean and adding extra difficult not get 100%
+  let concede_mean_w = ((gChv_w + gCav_w) / 2) * 1.5;
+  //using away to determine how home will concede base
+  home_goal_ratio_w = +gCav_w / concede_mean_w;
+  //using home to determine how away will concede
+  away_goal_ratio_w = +gChv_w / concede_mean_w;
+
+  //Multiply personal average goal With opponents average concede
+  home_score_ratio_w = +gShv_w * +gCav_w;
+  away_score_ratio_w = gSav_w * gChv_w;
+
+  let totals_w = (gSav_w + gShv_w)
+  let score_mean_w = (totals_w / 2)
+  let cede_mean_w = (gChv_w + gCav_w) / 2
+  estimated_goal_w = (cede_mean_w / score_mean_w) * totals_w
+  estimate_home_w = gShv_w / totals_w
+  estimate_away_w = gSav_w / totals_w
+
+
+
+
+
+  home_goal_1_w = goal_method(home_score_ratio_w, home_goal_ratio_w)
+
+  away_goal_1_w = goal_method(away_score_ratio_w, away_goal_ratio_w)
+
+  home_goal_2_w = goal_method(estimated_goal_w, estimate_home_w)
+
+  away_goal_2_w = goal_method(estimated_goal_w, estimate_away_w)
+
+
+
+  let fgh1w = goal(home_goal_1_w)
+  let fga1w = goal(away_goal_1_w)
+
+  let fgh2w = goal(home_goal_2_w)
+  let fga2w = goal(away_goal_2_w)
+
+  let homeWinW = goal2((fgh1w + fgh2w) / 2)
+  let awayWinW = goal2((fga1w + fga2w) / 2)
+
+  console.log(fgh1w, fga1w)
+  console.log(fgh2w, fga2w)
+  console.log(homeWinW, awayWinW)
+
+  /***/
 
 
   //Only for Scores
@@ -159,16 +308,18 @@ const result = () => {
   let final_goal_home_2 = goal(home_goal_2)
   let final_goal_away_2 = goal(away_goal_2)
 
-  let winH = inverse_value(away_value)
-  let winA = inverse_value(home_value)
+
   //for wins
 
   let home_total = goal2(((final_goal_home_1 + final_goal_home_2) / 2))
   let away_total = goal2(((final_goal_away_1 + final_goal_away_2) / 2))
   let goalsTotal = home_total + away_total
 
-  let home1 = goal(winH)
-  let away1 = goal(winA)
+  let winH = goal2((homeWinW + home_total) / 2)
+  let winA = goal2((awayWinW + away_total) / 2)
+
+  let home1 = homeWinW
+  let away1 = awayWinW
 
 
   //comparing Scores
@@ -202,14 +353,21 @@ const result = () => {
   //for win 1
 
 
-  if (compare_score(home1, away1) == "h") {
+  if (compare_score(fgh1w, fga1w) == "h") {
     h += 1
-  } else if (compare_score(home1, away1) == "a") {
+  } else if (compare_score(fgh1w, fga1w) == "a") {
     a += 1
-  } else if (compare_score(home1, away1) == "d") {
+  } else if (compare_score(fgh1w, fga1w) == "d") {
     d += 1
   }
 
+  if (compare_score(fgh2w, fga2w) == "h") {
+    h += 1
+  } else if (compare_score(fgh2w, fga2w) == "a") {
+    a += 1
+  } else if (compare_score(fgh2w, fga2w) == "d") {
+    d += 1
+  }
 
   //for win 2
 
@@ -224,7 +382,7 @@ ${final_goal_home_2}:${final_goal_away_2}
 ....
 ${home1}:${away1}
 `
-  console.log(gScore)
+  //console.log(gScore)
 
   //start
 
@@ -284,16 +442,14 @@ ${home1}:${away1}
     if (ho_me > dr_aw && ho_me > aw_ay) {
       if (aw_ay <= 0 && dr_aw <= 0) {
         dif = ho_me;
-        choice = `HOME`
         info = `Prediction Value ${dif}`
       } else {
         if (aw_ay > dr_aw) {
           dif = ho_me - aw_ay
-          choice = "Home"
+
           info = `Prediction Value ${dif}`
         } else if (aw_ay < dr_aw) {
           dif = ho_me - dr_aw;
-          choice = `Home`
           info = `Prediction Value ${dif}`;
         } else if (aw_ay == dr_aw) {
 
@@ -302,16 +458,13 @@ ${home1}:${away1}
     } else if (dr_aw > ho_me && dr_aw > aw_ay) {
       if (ho_me <= 0 && aw_ay <= 0) {
         dif = dr_aw
-        choice = `DRAW`
         info = `Prediction Value ${dif}`
       } else {
         if (ho_me > aw_ay) {
           dif = dr_aw - ho_me
-          choice = "Draw"
           info = `Prediction Value ${dif}`
         } else if (ho_me < aw_ay) {
           dif = dr_aw - aw_ay
-          choice = `Draw`
           info = `Prediction Value ${dif}`
         } else if (ho_me == aw_ay) {
 
@@ -321,16 +474,13 @@ ${home1}:${away1}
       if (ho_me <= 0 && dr_aw <= 0) {
         dif = aw_ay;
         info = `Prediction Value ${dif}`
-        choice = `AWAY`
       } else {
         if (dr_aw > ho_me) {
           dif = aw_ay - dr_aw
           info = `Prediction Value ${dif}`
-          choice = `Away`
         } else if (dr_aw < ho_me) {
           dif = aw_ay - ho_me
           info = `Prediction Value ${dif}`
-          choice = `Away`
         } else if (ho_me == dr_aw) {
 
         }
@@ -338,10 +488,16 @@ ${home1}:${away1}
 
     }
   } else {
-    choice = `Some Data missing`
     info = null
   }
 
+  if (home1 > away1) {
+    choice = "Home"
+  } else if (home1 < away1) {
+    choice = "Away"
+  } else if (home1 == away1) {
+    choice = "Draw"
+  }
 
 
 

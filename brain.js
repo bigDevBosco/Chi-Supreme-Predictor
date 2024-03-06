@@ -318,8 +318,8 @@ const result = () => {
   let winH = goal2((homeWinW + home_total) / 2)
   let winA = goal2((awayWinW + away_total) / 2)
 
-  let home1 = homeWinW
-  let away1 = awayWinW
+  let home1 =winH
+  let away1 = winA
 
 
   //comparing Scores

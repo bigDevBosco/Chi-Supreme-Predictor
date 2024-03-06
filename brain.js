@@ -247,8 +247,12 @@ const result = () => {
   gShv_w = inverse_value(away_value)
   gSav_w = inverse_value(home_value)
 
-  gChv_w = inverse_value(home_value_w)
-  gCav_w = inverse_value(away_value_w)
+  /*gChv_w = inverse_value(home_value_w)
+  gCav_w = inverse_value(away_value_w)*/
+  
+  gChv_w = +goal_conceded_home.value
+  gCav_w = +goal_conceded_away.value
+
 
 
   //based on the logic of concede

@@ -195,8 +195,8 @@ function score() {
   let score_mean = (totals / 2)
   let cede_mean = (gChv + gCav) / 2
   estimated_goal = (cede_mean / score_mean) * totals
-  estimate_home = gShv / totals
-  estimate_away = gSav / totals
+  estimate_home = gShv / estimated_goal;
+  estimate_away = gSav / estimated_goal;
 }
 
 

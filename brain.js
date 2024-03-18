@@ -601,13 +601,13 @@ function goal(goal) {
 
 
   if (goal < 1) {
-    if (goal_mini > 0.79) {
+    if (goal_mini > 0.5) {
       result = Math.ceil(goal)
     } else {
       result = Math.floor(goal)
     }
   } else {
-    if (goal_mini >= 0.6) {
+    if (goal_mini >= 0.5) {
       result = Math.ceil(goal)
     } else {
       result = Math.floor(goal)
